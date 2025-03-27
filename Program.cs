@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics.Contracts;
+using System.Security.Cryptography;
 
 class SayaTubeVideo
 {
@@ -8,6 +9,13 @@ class SayaTubeVideo
 
     public SayaTubeVideo(String title)
     {
+        //Contract.Requires <ArgumentNullException>(title != null, "Judul tidak boleh kosong");
+        //Contract.Requires<ArgumentException>(title.Length < 200, "Judul terlalu panjang");
+
+        if (title.Length > 200)
+            throw new ArgumentException("Judul Terlalu Panjang");
+        if (title == null)
+            throw new ArgumentNullException("Judul Harus diisi");
 
         Random random = new Random();
         this.id = random.Next(00000, 99999);
@@ -16,7 +24,23 @@ class SayaTubeVideo
     }
     public void IncreasePlayCount(int jumNonton)
     {
-        this.playCount += jumNonton;
+        if (jumNonton > 25000000)
+            throw new ArgumentOutOfRangeException("Jumlah penonton maksimal 25.000.000 / pemanggilan method");
+        if (jumNonton < 0)
+            throw new ArgumentOutOfRangeException("Jumlah penonton tidak boleh negatif");
+
+        try
+        {
+            checked
+            {
+                this.playCount += jumNonton;
+            }
+        } catch (OverflowException)
+        {
+            Console.WriteLine("Sudah melebihi batas");
+            return;
+        }
+
     }
 
     public void PrintVideoDetails()
@@ -45,6 +69,11 @@ class SayaTubeUser
 
     public SayaTubeUser(String username)
     {
+        if (username.Length > 100)
+            throw new ArgumentException("Username terlalu panjang");
+        if (username == null)
+            throw new ArgumentNullException("Username tidak boleh kosong");
+
         Random random = new Random();
         this.id = random.Next(00000, 99999);
         this.username = username;
@@ -62,6 +91,8 @@ class SayaTubeUser
 
     public void AddVideo(SayaTubeVideo vid)
     {
+        if (vid == null)
+            throw new ArgumentNullException("Video tidak boleh kosong");
         uploadVideos.Add(vid);
     }
 
@@ -69,7 +100,7 @@ class SayaTubeUser
     {
         Console.WriteLine("User = " + username);
 
-        for (int i = 0; i < uploadVideos.Count; i++)
+        for (int i = 0; i < 8; i++)
         {
             Console.WriteLine("Video " + (i + 1) + " judul = " + uploadVideos[i].GetTitle());
         }
@@ -80,6 +111,7 @@ public class Program
 {
     static void Main()
     {
+
         SayaTubeVideo vid1 = new SayaTubeVideo("Review Film Umbrella Academy oleh Bella");
         SayaTubeVideo vid2 = new SayaTubeVideo("Review Film Reply 1988 oleh Bella");
         SayaTubeVideo vid3 = new SayaTubeVideo("Review Film Hospital Playlist oleh Bella");
@@ -91,16 +123,20 @@ public class Program
         SayaTubeVideo vid9 = new SayaTubeVideo("Review Film Haikyu oleh Bella");
         SayaTubeVideo vid10 = new SayaTubeVideo("Review Film One Piece oleh Bella");
 
-        vid1.IncreasePlayCount(100);
-        vid2.IncreasePlayCount(100);
-        vid3.IncreasePlayCount(100);
-        vid4.IncreasePlayCount(100);
-        vid5.IncreasePlayCount(100);
-        vid6.IncreasePlayCount(100);
-        vid7.IncreasePlayCount(100);
-        vid8.IncreasePlayCount(100);
-        vid9.IncreasePlayCount(100);
-        vid10.IncreasePlayCount(100);
+        for (int i = 0; i < 250; i++)
+        {
+
+            vid1.IncreasePlayCount(2500000);
+            vid2.IncreasePlayCount(2500000);
+            vid3.IncreasePlayCount(2500000);
+            vid4.IncreasePlayCount(2500000);
+            vid5.IncreasePlayCount(2500000);
+            vid6.IncreasePlayCount(2500000);
+            vid7.IncreasePlayCount(2500000);
+            vid8.IncreasePlayCount(2500000);
+            vid9.IncreasePlayCount(2500000);
+            vid10.IncreasePlayCount(2500000);
+        }
 
         vid1.PrintVideoDetails();
         vid2.PrintVideoDetails();

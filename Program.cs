@@ -8,6 +8,7 @@ class SayaTubeVideo
 
     public SayaTubeVideo(String title)
     {
+
         Random random = new Random();
         this.id = random.Next(00000, 99999);
         this.title = title;
@@ -23,6 +24,7 @@ class SayaTubeVideo
         Console.WriteLine("Id = " + id);
         Console.WriteLine("Title = " + title);
         Console.WriteLine("Play Count = " + playCount);
+        Console.WriteLine("");
     }
 
     public int GetPlayCount()
@@ -88,6 +90,28 @@ public class Program
         SayaTubeVideo vid8 = new SayaTubeVideo("Review Film Naruto oleh Bella");
         SayaTubeVideo vid9 = new SayaTubeVideo("Review Film Haikyu oleh Bella");
         SayaTubeVideo vid10 = new SayaTubeVideo("Review Film One Piece oleh Bella");
+
+        vid1.IncreasePlayCount(100);
+        vid2.IncreasePlayCount(100);
+        vid3.IncreasePlayCount(100);
+        vid4.IncreasePlayCount(100);
+        vid5.IncreasePlayCount(100);
+        vid6.IncreasePlayCount(100);
+        vid7.IncreasePlayCount(100);
+        vid8.IncreasePlayCount(100);
+        vid9.IncreasePlayCount(100);
+        vid10.IncreasePlayCount(100);
+
+        vid1.PrintVideoDetails();
+        vid2.PrintVideoDetails();
+        vid3.PrintVideoDetails();
+        vid4.PrintVideoDetails();
+        vid5.PrintVideoDetails();
+        vid6.PrintVideoDetails();
+        vid7.PrintVideoDetails();
+        vid8.PrintVideoDetails();
+        vid9.PrintVideoDetails();
+        vid10.PrintVideoDetails();
 
         SayaTubeUser user = new SayaTubeUser("Bella");
         user.GetTotalVideoPlayCount();
